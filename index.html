@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ETHOS — Etika di Era Teknologi Informasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1120;--deep:#172554;--blue:#2563EB;--cyan:#38BDF8;--white:#F8FAFC;--slate:#94A3B8;--glass:rgba(23,37,84,.45);--bd:rgba(148,163,184,.18);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{scroll-padding-top:90px}*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--white);font:400 16px/1.65 'Plus Jakarta Sans',system-ui,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden;height:100vh}
+h1,h2,h3{line-height:1.15;font-weight:800}
+button{font:inherit;color:inherit;cursor:pointer}
+.w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em}.w>span{display:inline-block}
+.grad{background:linear-gradient(100deg,var(--white),var(--cyan) 50%,var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* intro */
+#intro{position:fixed;inset:0;z-index:100;background:radial-gradient(ellipse at 50% 0,#1e3a8a55,transparent 60%),var(--bg);overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 20px;transition:opacity .9s,transform .9s,filter .9s}
+#intro.out{opacity:0;transform:scale(1.25);filter:blur(12px);pointer-events:none}
+#fx{position:fixed;inset:0;z-index:101;pointer-events:none}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--bd) 1px,transparent 1px),linear-gradient(90deg,var(--bd) 1px,transparent 1px);background-size:56px 56px;opacity:.25;mask-image:radial-gradient(circle at 50% 40%,#000,transparent 70%)}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;pointer-events:none}
+.i-lab{letter-spacing:.5em;font-size:.8rem;color:var(--cyan);font-weight:700}
+#intro h1{font-size:clamp(2.6rem,10vw,7rem);letter-spacing:-.02em;position:relative;margin:12px 0}
+#intro h1:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 40%,#fff9 50%,transparent 60%);background-size:250% 100%;mix-blend-mode:overlay;animation:scan 4s 3s infinite;-webkit-mask:linear-gradient(#000,#000)}
+@keyframes scan{0%{background-position:150% 0}100%{background-position:-50% 0}}
+.tag{color:var(--slate);font-size:1.1rem}
+.team{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:860px;margin:14px auto 30px}
+.team button{background:var(--glass);border:1px solid var(--bd);backdrop-filter:blur(10px);border-radius:14px;padding:12px 20px;transition:.25s}
+.team button:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 8px 30px #2563eb55}
+.btn{position:relative;overflow:hidden;background:var(--blue);border:0;border-radius:999px;padding:15px 30px;font-weight:700;letter-spacing:.04em;box-shadow:0 0 30px #2563eb99,0 8px 20px #0006;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.btn:hover{transform:scale(1.05)}.btn.ghost{background:transparent;border:1px solid var(--bd);box-shadow:none}
+.rip{position:absolute;border-radius:50%;background:#fff6;transform:scale(0);animation:rp .6s forwards;pointer-events:none}@keyframes rp{to{transform:scale(4);opacity:0}}
+/* modal */
+#modal{position:fixed;inset:0;z-index:120;background:#050a18cc;backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+#modal.on{display:flex}
+.panel{width:min(380px,100%);background:var(--glass);border:1px solid var(--cyan);box-shadow:0 0 50px #2563eb88;border-radius:24px;padding:22px;text-align:center;background-color:#0f1a3d}
+.ph{aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,var(--deep),#0b1120);display:grid;place-items:center;font-size:4rem;font-weight:800;color:var(--cyan);border:1px solid var(--bd)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.mn{display:flex;justify-content:space-between;margin-top:14px;gap:8px}.mn button{background:none;border:1px solid var(--bd);border-radius:10px;padding:6px 14px}
+/* nav */
+nav{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:50;width:min(960px,calc(100% - 24px));display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-radius:999px;border:1px solid var(--bd);background:rgba(11,17,32,.55);backdrop-filter:blur(14px);transition:.4s}
+nav.s{background:rgba(11,17,32,.88);box-shadow:0 10px 40px #0008}
+nav b{letter-spacing:.2em}nav .l{display:flex;gap:6px;align-items:center}
+nav a{color:var(--slate);text-decoration:none;font-size:.9rem;padding:6px 12px;border-radius:99px;transition:.2s}nav a:hover,nav a.on{color:var(--white);background:#2563eb44}
+#pp{font-size:.8rem;color:var(--cyan);border:1px solid var(--bd);border-radius:99px;padding:4px 12px}
+#hb{display:none;background:none;border:0;font-size:1.4rem}
+#rb{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));z-index:60}
+@media(max-width:760px){#hb{display:block}nav .l{display:none;position:absolute;top:58px;left:0;right:0;flex-direction:column;background:#0b1120f2;border:1px solid var(--bd);border-radius:20px;padding:12px}nav .l.o{display:flex}}
+/* layout */
+section{padding:90px 20px;max-width:1040px;margin:auto;position:relative}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;max-width:1040px}
+.hero h1{font-size:clamp(2.4rem,7vw,5.2rem);margin:14px 0 18px}
+.hero p{max-width:560px;color:var(--slate);font-size:1.15rem}.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.sphere{position:absolute;right:-4%;top:18%;width:min(440px,60vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#38bdf855,#2563eb33 40%,transparent 70%);border:1px solid var(--bd);z-index:-1;animation:fl 8s ease-in-out infinite}
+.sphere:before,.sphere:after{content:"";position:absolute;inset:12%;border-radius:50%;border:1px dashed #38bdf866;animation:sp 24s linear infinite}.sphere:after{inset:28%;animation-direction:reverse}
+@keyframes fl{50%{transform:translateY(-24px)}}@keyframes sp{to{transform:rotate(360deg)}}
+.lab{color:var(--cyan);letter-spacing:.3em;font-size:.75rem;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:26px}
+.card{background:var(--glass);border:1px solid var(--bd);border-radius:20px;padding:22px;backdrop-filter:blur(8px);transition:transform .3s,border-color .3s,box-shadow .3s}
+.card:hover{transform:translateY(-5px);border-color:var(--cyan);box-shadow:0 12px 40px #2563eb33}
+.card h3{font-size:1.1rem;margin-bottom:8px}.card p,.card li{color:#cbd5e1;font-size:.95rem}.card ul{padding-left:18px}
+.card small,.src{color:var(--slate);font-size:.8rem}
+.mh{display:flex;align-items:center;gap:18px;margin-bottom:28px}.mh .num{font-size:clamp(3rem,9vw,5.5rem);font-weight:800;color:transparent;-webkit-text-stroke:1.5px var(--blue)}
+.mh h2{font-size:clamp(1.6rem,4.5vw,2.8rem)}
+h3.sub{margin:36px 0 14px;font-size:1.2rem;color:var(--cyan)}
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tl{position:relative;padding-left:28px;border-left:2px solid var(--bd);display:grid;gap:14px}
+.tl .card{position:relative}.tl .card:before{content:"";position:absolute;left:-37px;top:26px;width:14px;height:14px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+.tl .yr{color:var(--cyan);font-weight:700;font-size:.85rem}
+.tree{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.tree .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%}
+.nd{background:#1d4ed8;border-radius:12px;padding:10px 16px;font-weight:700;font-size:.9rem;flex:1;min-width:150px;max-width:340px}
+.nd.t{background:linear-gradient(90deg,var(--blue),var(--cyan));color:#06101f;flex:none}.nd.s{background:var(--glass);border:1px solid var(--bd);font-weight:400;color:#cbd5e1}
+.ar{color:var(--cyan);line-height:1}
+details.card summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details.card summary:after{content:"+";color:var(--cyan);font-size:1.3rem;line-height:1}details[open] summary:after{content:"–"}
+details.card[open]{border-color:var(--cyan)}details.card p,details.card ul{margin-top:10px}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:640px){.vs{grid-template-columns:1fr}}
+.eq{display:grid;gap:10px;margin:14px 0}.eq div{padding:14px 18px;border-radius:14px;border:1px solid var(--bd);font-weight:700}
+.good{background:#16a34a22}.bad{background:#dc262622}
+.warn{border-left:4px solid var(--cyan);padding:16px 20px;background:var(--glass);border-radius:0 16px 16px 0;margin-top:18px}
+.big{font-size:2rem;font-weight:800;color:var(--cyan)}
+.mf{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:44px;padding-top:24px;border-top:1px solid var(--bd)}
+.mf .btn{padding:11px 20px;font-size:.9rem}.mf .done{background:#16a34a;box-shadow:0 0 24px #16a34a88}
+.qz .q{margin-bottom:22px}.qz .o{display:block;width:100%;text-align:left;margin-top:8px;padding:12px 16px;background:#0b1120aa;border:1px solid var(--bd);border-radius:12px;transition:.2s}
+.qz .o:hover{border-color:var(--cyan)}.qz .o.ok{background:#16a34a44;border-color:#22c55e}.qz .o.no{background:#dc262644;border-color:#ef4444}
+.fb{font-size:.88rem;color:var(--slate);margin-top:8px;min-height:1.2em}
+footer{text-align:center;padding:60px 20px 80px;border-top:1px solid var(--bd);color:var(--slate)}footer b{color:var(--white);letter-spacing:.2em}
+#top{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:50;width:46px;height:46px;border-radius:50%;background:var(--blue);border:0;box-shadow:0 0 20px #2563eb99;opacity:0;pointer-events:none;transition:.3s}#top.on{opacity:1;pointer-events:auto}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body class="lock">
+<canvas id="fx"></canvas>
+<div id="intro">
+ <div class="grid-bg"></div><div class="orb" style="width:380px;height:380px;background:#2563eb;left:-100px;top:-80px"></div><div class="orb" style="width:300px;height:300px;background:#38bdf8;right:-80px;bottom:-60px"></div>
+ <div class="i-lab" id="i1">KELOMPOK 2</div>
+ <h1 class="grad" id="i2">CYBER CULTURE</h1>
+ <p class="tag" id="i3">Exploring Ethics in the Digital Era</p>
+ <div id="i4" style="margin-top:34px"><div class="lab">OUR TEAM</div><div class="team" id="team"></div></div>
+ <button class="btn" id="enter">EXPLORE LEARNING EXPERIENCE →</button>
+</div>
+<div id="modal" role="dialog" aria-modal="true" aria-label="Profil anggota"><div class="panel">
+ <div class="ph" id="mph"></div><h3 id="mnm" style="margin-top:14px"></h3><p class="tag" id="mrole" style="font-size:.9rem"></p>
+ <div class="mn"><button id="mp" aria-label="Sebelumnya">←</button><button id="mc">Tutup ✕</button><button id="mx" aria-label="Berikutnya">→</button></div></div></div>
+<div id="rb"></div>
+<nav id="nav"><b>ETHOS</b><button id="hb" aria-label="Menu">☰</button>
+ <div class="l" id="nl"><a href="#home">Home</a><a href="#overview">Tentang Materi</a><a href="#m1">Materi Pembelajaran</a><a href="#quiz">Refleksi</a><span id="pp">0/4 selesai</span></div></nav>
+
+<section class="hero" id="home"><div class="sphere"></div>
+ <div class="lab">INTERACTIVE LEARNING EXPERIENCE</div>
+ <h1 id="ht">ETIKA DI ERA TEKNOLOGI INFORMASI</h1>
+ <p>Memahami etika, moral, sosial, dan tanggung jawab dalam menghadapi perkembangan teknologi informasi.</p>
+ <div class="cta"><a class="btn" href="#m1" style="text-decoration:none">Mulai Belajar</a><a class="btn ghost" href="#overview" style="text-decoration:none">Jelajahi Materi</a></div></section>
+
+<section id="overview"><div class="lab">TENTANG MATERI</div><h2 class="rv" style="font-size:2.2rem;margin:10px 0">Pengantar Pembelajaran</h2>
+ <div class="stats">
+  <div class="card"><small>Nama materi</small><h3>Etika di Era Teknologi Informasi</h3></div>
+  <div class="card"><small>Jenis</small><h3>Interactive Learning</h3></div>
+  <div class="card"><small>Fokus</small><h3>Cyberethics dan perkembangan teknologi informasi</h3></div>
+  <div class="card"><small>Total pembahasan</small><div class="big">4</div><small>bagian utama</small></div></div>
+ <h3 class="sub">Pertanyaan Mendasar</h3>
+ <div class="g">
+  <div class="card"><h3>01</h3><p>Apa keterkaitan antara etika, moral, sosial dan budaya dengan Teknologi Informasi?</p></div>
+  <div class="card"><h3>02</h3><p>Prinsip apa yang digunakan sebagai acuan Cyberethics?</p></div>
+  <div class="card"><h3>03</h3><p>Bagaimana secara bijak menyikapi perubahan kehidupan masyarakat sebagai dampak Teknologi Informasi?</p></div></div>
+ <div class="card" style="margin-top:26px"><h3>Progres belajar</h3><div style="height:8px;border-radius:9px;background:#0b1120;margin-top:10px"><div id="pbar" style="height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .6s"></div></div>
+ <small id="ptx">Tandai tiap modul sebagai selesai untuk melihat progres.</small></div></section>
+
+<section class="mod" id="m1"><div class="mh"><span class="num">01</span><h2 class="rv">Cyberethics (Etika Dunia Maya)</h2></div>
+ <div class="g"><div class="card"><h3>Pengertian Cyberethics</h3><p>“Etika dunia maya”: studi terkait moral, legal dan pengaruh sosial serta dampaknya sebagai akibat dari kemajuan teknologi informasi.</p><small>Sumber: Herman T. Tavani, Ethics &amp; Technology, John Wiley &amp; Sons, 2004</small></div>
+ <div class="card"><h3>Teknologi informasi dalam arti luas</h3><p>Tidak terbatas pada peralatan komputer dan telekomunikasi.</p><ul><li>Termasuk hand-held devices, PC dan mainframe.</li><li>Termasuk juga internet dan private network.</li></ul></div></div>
+ <h3 class="sub">Empat Fase Cyberethics</h3>
+ <div class="tl">
+  <div class="card"><div class="yr">FASE 1 · 1950–1960s</div><h3>Stand alone machine, Main frame</h3><p>Issue: Artificial Intelligence (AI), DB privacy.</p></div>
+  <div class="card"><div class="yr">FASE 2 · 1970–1980s</div><h3>Minicomp dan PC interconnected via private network</h3><p>Issue fase 1 + intellectual property, s/w piracy, computer crime, communication privacy.</p></div>
+  <div class="card"><div class="yr">FASE 3 · 1990–sekarang</div><h3>Internet dan www</h3><p>Issues fase 1+2 + free speech, anonimity, legal juridiction, virtual communities, dll.</p></div>
+  <div class="card"><div class="yr">FASE 4 · Sekarang–masa depan</div><h3>Convergence of ICT with bio and nano technology</h3><p>Issues 1–3 + artificial electronic agents (bots) with decision making capabilities, serta perkembangan nanocomputing, bioinformatics, dan computational genomics.</p></div></div>
+ <h3 class="sub">Cyberethics: Applied Ethics</h3>
+ <div class="g"><div class="card"><h3>1 · Professional Ethics</h3><p>Cyberethics dipandang dari Profesional Ethics (comp professionals).</p></div>
+ <div class="card"><h3>2 · Philosophical Ethics</h3><p>Mempengaruhi norma dan sosial politik.</p></div>
+ <div class="card"><h3>3 · Descriptive Ethics</h3><p>Mempengaruhi aspek tertentu dari moral sistem.</p></div></div>
+ <h3 class="sub">Descriptive vs Normative</h3>
+ <div class="vs"><div class="card"><h3>Descriptive</h3><p>Report or describe what is the case.</p></div>
+ <div class="card"><h3>Normative</h3><p>Prescribe what ought to be the case.</p>
+  <details class="card" style="margin-top:12px;padding:14px"><summary>Non-Moral</summary><p>Prescribe or evaluate in matters involving standards, such as art or sport (eg. criteria of a good painting or an outstanding athelet).</p></details>
+  <details class="card" style="margin-top:10px;padding:14px"><summary>Moral</summary><p>Prescribe or evaluate in matters having to do with fairness and obligation (eg. criteria for just and unjust actions and policies).</p></details></div></div>
+ <h3 class="sub">Ethics and Morality: Basic Components of Moral System</h3>
+ <div class="card tree"><div class="nd t">Basic components of Moral System</div><div class="ar">↓</div>
+  <div class="row"><div class="nd" style="max-width:none;flex:2">Rules of Conduct<br><small>action-guiding rules, berupa directives atau social policies</small></div><div class="nd" style="max-width:none">Principles of Evaluation<br><small>evaluative standards untuk menjustifikasi rules of conduct</small></div></div><div class="ar">↓</div>
+  <div class="row"><div class="nd s">Rules for guiding the actions of individuals (microlevel).<br>Contoh: Do not steal, do not harm others</div><div class="nd s">Rules for establishing social policies (macrolevel).<br>Contoh: Software should be protected, Privacy should be respected</div><div class="nd s">Contoh: social utility dan justice as fairness</div></div></div>
+ <h3 class="sub">Components of Moral System</h3>
+ <div class="card tree"><small>Dasar untuk justifikasi prinsip moral</small><div class="row"><div class="nd">Religion</div><div class="nd">Philosophical ethics</div><div class="nd">Law</div></div><div class="ar">↓</div>
+  <div class="nd t">Principles of Evaluation · Rules of Conduct</div><small>Prinsip moral dan aturan</small><div class="ar">↑</div><div class="nd">Core Values</div><small>Sumber dari aturan moral</small></div>
+ <h3 class="sub">Etika, Sosial dan Politik dengan Information Technology System</h3>
+ <div class="card"><p>Pengenalan teknologi informasi baru menimbulkan ripple effect: isu etika, sosial, dan politik baru yang harus ditangani pada tingkat individu, sosial, dan politik. Isu ini memiliki <b>lima dimensi moral</b>:</p><small>Sumber: Managing the Digital Firm, Kenneth Laudon © Prentice Hall 2011</small></div>
+ <div class="g" style="margin-top:14px">
+  <details class="card"><summary>1 · Information Rights &amp; Obligations</summary><ul><li>Hak-hak apa yang dimiliki orang berkaitan dengan informasi tentang diri mereka</li><li>Menjual informasi pelanggan</li><li>Dapatkah mereka melacak perilaku pelanggan?</li></ul></details>
+  <details class="card"><summary>2 · Property Rights &amp; Obligations</summary><ul><li>Siapa yang memiliki perangkat lunak, data — bagaimana kita melindungi hak kekayaan intelektual</li><li>Music, movies, software sharing, dll.</li></ul></details>
+  <details class="card"><summary>3 · System Quality</summary><ul><li>Apa standar untuk data dan sistem jaminan mutu</li><li>Testing software, bugs — siapa bertanggung jawab bila “bug” menimbulkan masalah?</li></ul></details>
+  <details class="card"><summary>4 · Quality of Life</summary><ul><li>Bagaimana kita memastikan Sistem Informasi tidak menurunkan kualitas hidup masyarakat?</li><li>Computing anywhere, any time (work/family/leisure)</li><li>Computer crime — new technology, new ways to steal</li></ul></details>
+  <details class="card"><summary>5 · Accountability &amp; Control</summary><ul><li>Siapa yang harus bertanggung jawab ketika seseorang dirugikan oleh teknologi?</li></ul></details></div>
+ <h3 class="sub">Impact of Ethical Issues in Society and Politics</h3>
+ <div class="vs"><div class="card"><h3>Social issues spring from ethical issues</h3><ul><li>Masyarakat harus menempatkan perhatian dan harapan pada setiap individu sebagai basis nilai etika yang benar.</li><li>Membuka kesempatan perdebatan di masyarakat tentang harapan dan keinginan agar individu berperilaku benar.</li><li>Censorship on the web?</li></ul></div>
+ <div class="card"><h3>Political issues spring from social conflict</h3><ul><li>Harus berpijak pada landasan hukum yang benar sebagai acuan penegakan hukum di masyarakat agar setiap individu berperilaku benar.</li><li>Censorship laws?</li></ul></div></div>
+ <h3 class="sub">Trend Teknologi yang Mendorong Perlunya Etika Dunia Maya</h3>
+ <div class="g">
+  <div class="card"><h3>1 · Peningkatan kecepatan komputer</h3><ul><li>Moore’s law: IC’s speed double dalam 2 tahun, processor speed double setiap 18 bulan (intel)</li><li>Setiap institusi/organisasi semakin bergantung pada komputer</li></ul></div>
+  <div class="card"><h3>2 · Penurunan cepat harga media penyimpan (HD)</h3><ul><li>Setiap individu dapat menyimpan data dengan mudah dan murah</li><li>Teknologi cloud memungkinkan penyimpanan nir-perangkat</li></ul></div>
+  <div class="card"><h3>3 · Kemajuan teknologi jaringan dan internet</h3><ul><li>Memungkinkan pemindahan data personal atau institusi dari “remote location” secara cepat dan mudah</li></ul></div>
+  <div class="card"><h3>4 · Kemajuan teknik analisis data (data mining)</h3><ul><li>Profiling: agregasi data untuk menentukan profile individu</li><li>Non-obvious Relationship Awareness (NORA): kompilasi data dari berbagai resource untuk mencari “hidden connection” dalam membantu penentuan identitas kriminal atau terorisme</li></ul></div></div>
+ <div class="mf"></div></section>
+
+<section class="mod" id="m2"><div class="mh"><span class="num">02</span><h2 class="rv">Perkembangan Cyberspace</h2></div>
+ <h3 class="sub" style="margin-top:0">Perubahan dan Tantangan ke Depan</h3>
+ <p style="color:var(--slate);margin-bottom:14px">Perubahan terutama di <b>Real Space</b> (Steam Engine hingga Computer), lalu terutama di <b>Cyber Space</b> (Digital Revolution).</p>
+ <div class="tl">
+  <div class="card"><div class="yr">1814 · 1st Wave</div><h3>Steam Engine</h3><p>Industry Revolution · dari Agricultural Society ke Industrial Society.</p></div>
+  <div class="card"><div class="yr">1873 · 2nd Wave</div><h3>Telephone</h3><p>Analog Electronics.</p></div>
+  <div class="card"><div class="yr">1920 · 3rd Wave</div><h3>TV</h3><p>Analog Electronics.</p></div>
+  <div class="card"><div class="yr">1973 · 4th Wave</div><h3>Computer</h3><p>Information Renovation.</p></div>
+  <div class="card"><div class="yr">2010–2025 · 5th Wave</div><h3>Digital Revolution</h3><p>Digital Electronics · Information Society.</p></div></div>
+ <h3 class="sub">Access, Networks, Applications &amp; Contents</h3>
+ <div class="g"><div class="card"><h3>Access</h3><p>PC, Mobile, Digital TV, Music, PDA, Videoconsoles, Emerging platforms.</p></div>
+ <div class="card"><h3>Networks</h3><p>Cable, 3G, DSL, Satellite, PLC, Wireless, Fiber.</p></div>
+ <div class="card"><h3>Applications &amp; Contents</h3><p>Advertising, VoIP, Music, Education, eFinance, Communications, Film &amp; TV, eCommerce, Games, VoD, Connectivity services.</p></div></div>
+ <div class="warn">Perkembangan IPTEK di “Akses, Network, Aplikasi dan Konten” menumbuhkan Cyberspace — Dunia Maya.</div>
+ <h3 class="sub">Transformasi Sosial-Budaya</h3>
+ <div class="vs"><div class="card"><h3>Yang bertransformasi</h3><ul><li>Nilai-nilai (budaya, sosial, etika, pengetahuan, dll)</li><li>Regulasi</li><li>Pembangunan</li><li>Aktivitas-aktivitas (transaksi, dll)</li></ul></div>
+ <div class="card"><h3>Contoh</h3><ul><li>Commerce → e-Commerce</li><li>Banking → e-Banking</li><li>Notary → Cyber Notary</li><li>Voting → e-Voting, dll.</li></ul></div></div>
+ <div class="mf"></div></section>
+
+<section class="mod" id="m3"><div class="mh"><span class="num">03</span><h2 class="rv">Real Space = Cyber Space</h2></div>
+ <div class="eq"><div class="good">✓ Baik di Dunia Nyata = Baik di Dunia Maya</div><div class="bad">✕ Buruk di Dunia Nyata = Buruk di Dunia Maya</div><div style="background:var(--glass)">Norma di dunia nyata dan maya <u>sama</u></div></div>
+ <h3 class="sub">Interaction Layers</h3>
+ <div class="card" style="overflow-x:auto"><table style="width:100%;min-width:520px;border-collapse:collapse;font-size:.9rem">
+  <tr style="color:var(--cyan);text-align:left"><th style="padding:8px">Cyberspace (Internet)</th><th>Real World</th></tr>
+  <tr><td style="padding:8px;border-top:1px solid var(--bd)">B-to-C (E-health, E-park, E-AlQuran, Internet mall, entertainment)</td><td style="border-top:1px solid var(--bd)">Environment Establishment (gym, court, restaurant, the stores, mosque, theater, house)</td></tr>
+  <tr><td style="padding:8px;border-top:1px solid var(--bd)">B-to-B (Supply NW, E-trade, Sales NW, E-procurement, Virtual Co)</td><td style="border-top:1px solid var(--bd)">Industry Infra (factory, institute, Small Co, Physical Co, Trade Co, Sales Co)</td></tr>
+  <tr><td style="padding:8px;border-top:1px solid var(--bd)">B-to-G (e-edu, E-govern, Virtual-bank, Cyber insure)</td><td style="border-top:1px solid var(--bd)">Public Infra (land, bank, school, public office, police)</td></tr>
+  <tr><td style="padding:8px;border-top:1px solid var(--bd)">Basic Infra (High-speed Internet, security, E-Auth, E-pay)</td><td style="border-top:1px solid var(--bd)">Basic Infra (water, road, communication, energy)</td></tr>
+  <tr><td style="padding:8px;border-top:1px solid var(--bd)">Society rules / hukum: Basic e-trade Law, E-Signature Law, International Law, E-network Law, Intellectual Property Law</td><td style="border-top:1px solid var(--bd)">Law system: City Cost. Law, Building Law, Institutions Commercial Law, Civil Law, Criminal Law</td></tr></table></div>
+ <div class="warn"><b>Kekhawatiran:</b> kebiasaan buruk/negatif di dunia nyata menjadi hal yang biasa di dunia maya, akhirnya menjadi hal yang biasa di dunia nyata.<div style="margin-top:10px;font-weight:700;color:var(--cyan)">Konten negatif → Kebiasaan buruk usia dewasa</div></div>
+ <div class="mf"></div></section>
+
+<section class="mod" id="m4"><div class="mh"><span class="num">04</span><h2 class="rv">Kasus dan Penanganan</h2></div>
+ <h3 class="sub" style="margin-top:0">Etika Cyberspace dan Real Space</h3>
+ <div class="g"><div class="card"><h3>Etika di real space</h3><p>Contoh: susila, menghargai orang lain, menghargai reputasi orang. Etiket yang sama mesti tetap dijunjung tinggi di cyber space.</p></div>
+ <div class="card"><h3>Koridor norma</h3><ul><li>Norma kesopanan</li><li>Norma kesusilaan</li><li>Norma sosial</li><li>Norma adat</li><li>Norma hukum</li></ul></div>
+ <div class="card"><h3>Aspek hukum</h3><p>Norma hukum di real space tersebar pada berbagai produk hukum: KUHP, KUHPer, dan berbagai produk Undang-Undang.</p></div></div>
+ <h3 class="sub">Fakta</h3>
+ <div class="vs"><div class="card"><p>Teknologi informasi telah mengubah perilaku dan peradaban masyarakat global.</p></div><div class="card"><p>Teknologi informasi selain memberikan manfaat juga menjadi sarana efektif perbuatan melawan hukum.</p></div></div>
+ <h3 class="sub">Data Pertumbuhan Internet Indonesia</h3>
+ <div class="g"><div class="card"><div class="big">2,26 M</div><p>pemakai internet di dunia (32% penduduk dunia)</p></div><div class="card"><div class="big">55 jt</div><p>pemakai internet di Indonesia (22% penduduk)</p></div><div class="card"><div class="big">2 jt/detik</div><p>email terkirim</p></div><div class="card"><div class="big">42,48 jt</div><p>pengguna Facebook (no 4 dunia) · Twitter 19,5 jt (no 5 dunia)</p></div></div>
+ <p class="src" style="margin-top:10px">Keberadaan semakin banyak orang dan pelaku usaha di dunia maya membawa pengaruh besar pada perdagangan tingkat nasional, regional maupun global. Sumber: apjii.or.id, Markplus Insight 2011, checkbook.com April 2012, semiocast.com (Maret 2012)</p>
+ <h3 class="sub">Karakteristik Internet</h3>
+ <div class="card"><p><b>Positif</b> dalam banyak hal, namun <b>berdampak negatif</b> bila tidak dilengkapi sistem pengamanan yang memadai, sehingga rawan terhadap penyalahgunaan konten (pengambilan, perusakan, perubahan, pendistribusian, dan lain-lain).</p><p style="margin-top:8px"><small>Fungsi: Korespondensi · Komunikasi langsung · Pencarian informasi · Berbagi info &amp; data · Transaksi · Interaksi sosial · Hiburan</small></p></div>
+ <h3 class="sub">Kejahatan Komputer</h3>
+ <p style="color:var(--slate);margin-bottom:12px">Meliputi jenis kegiatan yang bersifat melawan hukum, pada umumnya terbagi dua kelompok:</p>
+ <div class="vs"><div class="card"><h3>Komputer sebagai sasaran</h3><p>Komputer, sistem elektronik dan informasi elektronik menjadi <b>sasaran</b>, seperti serangan virus dan serangan lain.</p></div>
+ <div class="card"><h3>Komputer sebagai alat/sarana</h3><p>Seperti pencurian data, penipuan, ancaman, dll. Hampir semua jenis kejahatan tradisional dapat memanfaatkan komputer/sistem elektronik dan mempersulit pelacakannya.</p></div></div>
+ <h3 class="sub">Perubahan Paradigma &amp; Istilah</h3>
+ <div class="card"><p>Dengan semakin luasnya pemanfaatan TI sebagai alat komunikasi, penyimpan dan pengolah informasi, paradigma dan perilaku masyarakat berubah dari <b>tak tertulis</b> → <b>tertulis</b> → <b>ter-elektronik</b>. Banyak bukti kejahatan pun berada dalam format elektronik (<b>digital evidence</b>).</p>
+ <div class="row" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px"><span class="nd">Computer crime</span>→<span class="nd">Internet crime<br><small>kejahatan internet</small></span>→<span class="nd">Cybercrime<br><small>kejahatan di dunia maya</small></span></div></div>
+ <div class="mf"></div></section>
+
+<section id="quiz"><div class="lab">REFLEKSI</div><h2 style="font-size:2.2rem;margin:10px 0 20px">Mini Quiz Pemahaman</h2><div class="card qz" id="qz"></div></section>
+<footer><b>ETHOS</b> — Interactive Learning Platform<p>Etika di Era Teknologi Informasi</p><p><i>Learning through understanding.</i></p><p style="margin-top:14px"><a href="#home" style="color:var(--cyan)">Back to top ↑</a></p><p class="src" style="margin-top:14px">Kelompok 2 · Cyber Culture</p></footer>
+<button id="top" aria-label="Kembali ke atas">↑</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// FOTO ANGGOTA: isi "photo" dengan data URI / path gambar asli masing-masing anggota.
+const TEAM=[{n:"Ahmad Zulvan Maulavi",photo:""},{n:"Jamaludin",photo:""},{n:"Chandra Ardiansyah Siregar",photo:""},{n:"Dzakiyah Al Barakah",photo:""},{n:"Fathimah Azzahra Hidayatillah",photo:""}];
+const hasG=window.gsap&&window.ScrollTrigger;if(hasG)gsap.registerPlugin(ScrollTrigger);
+function split(el){el.innerHTML=el.textContent.trim().split(/\s+/).map(w=>`<span class="w"><span>${w}</span></span>`).join(' ')}
+// ripple
+document.addEventListener('click',e=>{const b=e.target.closest('.btn');if(!b)return;const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height),s=document.createElement('span');s.className='rip';s.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;b.append(s);setTimeout(()=>s.remove(),600)});
+// particles
+const cv=$('#fx'),cx=cv.getContext('2d');let P=[],W,H;const COL=['#2563EB','#38BDF8','#F8FAFC'];
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}rs();addEventListener('resize',rs);
+function burst(x,y,n){if(RM)return;for(let i=0;i<n&&P.length<220;i++){const a=Math.random()*6.28,v=1+Math.random()*4;P.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,s:2+Math.random()*5,c:COL[i%3],k:i%3})}}
+addEventListener('pointerdown',e=>burst(e.clientX,e.clientY,16));
+let lt=0;addEventListener('pointermove',e=>{if(e.pointerType==='mouse'&&Date.now()-lt>40){lt=Date.now();burst(e.clientX,e.clientY,1)}});
+for(let i=0;i<40;i++)P.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,l:9,s:1+Math.random()*2,c:'#38BDF8',k:0,amb:1});
+function draw(){cx.clearRect(0,0,W,H);for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.amb){if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;cx.globalAlpha=.5}else{p.vx*=.95;p.vy*=.95;p.l-=.02;cx.globalAlpha=Math.max(p.l,0)}
+ cx.fillStyle=p.c;cx.shadowColor=p.c;cx.shadowBlur=10;cx.beginPath();
+ if(p.k===1){cx.save();cx.translate(p.x,p.y);cx.rotate(.78);cx.fillRect(-p.s/2,-p.s/2,p.s,p.s);cx.restore()}else cx.arc(p.x,p.y,p.s/2,0,6.28);cx.fill()}
+ P=P.filter(p=>p.amb||p.l>0);requestAnimationFrame(draw)}draw();
+// intro
+const tm=$('#team');TEAM.forEach((m,i)=>{const b=document.createElement('button');b.textContent=m.n;b.onclick=()=>openM(i);tm.append(b)});
+split($('#i2'));
+if(hasG&&!RM){const t=gsap.timeline({delay:.3});
+ t.from('#i1',{opacity:0,scale:1.2,filter:'blur(14px)',duration:1.2}).from('#i2 .w>span',{yPercent:110,opacity:0,stagger:.25,duration:1}).from('#i3',{opacity:0,y:20,duration:.9},'-=.2')
+ .from('#i4 .lab',{opacity:0,y:10}).from('#team button',{opacity:0,y:24,stagger:.15,duration:.7}).from('#enter',{opacity:0,scale:.8,duration:.7,ease:'back.out(2)'})}
+let mi=0;function openM(i){mi=(i+TEAM.length)%TEAM.length;const m=TEAM[mi];$('#mph').innerHTML=m.photo?`<img src="${m.photo}" alt="Foto ${m.n}">`:m.n.split(' ').map(x=>x[0]).slice(0,2).join('');$('#mnm').textContent=m.n;$('#mrole').textContent=m.photo?'Anggota Kelompok 2 · Cyber Culture':'Foto belum tersedia · Anggota Kelompok 2';
+ $('#modal').classList.add('on');if(hasG&&!RM){gsap.fromTo('.panel',{scale:.85,opacity:0,filter:'blur(10px)'},{scale:1,opacity:1,filter:'blur(0px)',duration:.5,ease:'back.out(1.6)'});const r=$('.panel').getBoundingClientRect();burst(r.left+r.width/2,r.top+60,18)}}
+$('#mc').onclick=()=>$('#modal').classList.remove('on');$('#mp').onclick=()=>openM(mi-1);$('#mx').onclick=()=>openM(mi+1);
+$('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')};addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('on')});
+// smooth scroll
+let lenis;try{lenis=new Lenis({lerp:RM?1:.09});if(hasG){lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}else{(function f(t){lenis.raf(t);requestAnimationFrame(f)})()}lenis.stop()}catch(e){}
+function go(t){lenis?lenis.scrollTo(t,{offset:-80}):$(t).scrollIntoView({behavior:'smooth'})}
+$$('a[href^="#"]').forEach(a=>a.onclick=e=>{e.preventDefault();go(a.getAttribute('href'));$('#nl').classList.remove('o')});
+$('#hb').onclick=()=>$('#nl').classList.toggle('o');
+$('#enter').onclick=()=>{$('#intro').classList.add('out');burst(innerWidth/2,innerHeight*.8,30);setTimeout(()=>{$('#intro').style.display='none';document.body.classList.remove('lock');scrollTo(0,0);lenis&&lenis.start();enterMain()},RM?0:850)};
+// main
+function enterMain(){if(!hasG||RM)return;split($('#ht'));
+ gsap.from('#ht .w>span',{yPercent:110,opacity:0,stagger:.09,duration:.9,ease:'power3.out'});gsap.from('.hero p,.cta,.hero .lab',{opacity:0,y:24,stagger:.15,delay:.5});
+ ScrollTrigger.refresh()}
+if(hasG&&!RM){$$('.rv').forEach(h=>{split(h);gsap.from(h.querySelectorAll('.w>span'),{yPercent:110,opacity:0,stagger:.07,duration:.8,scrollTrigger:{trigger:h,start:'top 88%'}})});
+ $$('.g,.vs,.tl,.stats').forEach(g=>gsap.from(g.children,{opacity:0,y:36,scale:.97,stagger:.1,duration:.7,scrollTrigger:{trigger:g,start:'top 88%'}}));
+ gsap.to('.sphere',{yPercent:30,scrollTrigger:{trigger:'#home',scrub:true,start:'top top',end:'bottom top'}})}
+// nav/progress
+const ids=['m1','m2','m3','m4'],done=new Set(),nm=['Cyberethics','Perkembangan Cyberspace','Real Space = Cyber Space','Kasus dan Penanganan'];
+function upd(){const n=done.size;$('#pp').textContent=n+'/4 selesai';$('#pbar').style.width=n*25+'%';$('#ptx').textContent=n+' dari 4 modul selesai ('+n*25+'%)';
+ $$('.mod .done').forEach((b,i)=>b.textContent=done.has(i)?'✓ Selesai':'Tandai Selesai');$$('.mod .done').forEach((b,i)=>b.classList.toggle('done',true))}
+$$('.mod').forEach((s,i)=>{const f=$('.mf',s);f.innerHTML=`<button class="btn ghost pv">${i?'← '+nm[i-1]:'← Pengantar'}</button><button class="btn done" style="background:var(--blue)"></button><button class="btn nx">${i<3?nm[i+1]+' →':'Refleksi →'}</button>`;
+ $('.pv',f).onclick=()=>go(i?'#'+ids[i-1]:'#overview');$('.nx',f).onclick=()=>go(i<3?'#'+ids[i+1]:'#quiz');
+ $('.done',f).onclick=e=>{const b=e.currentTarget;if(done.has(i)){done.delete(i);b.style.background='var(--blue)'}else{done.add(i);b.style.background='#16a34a';const r=b.getBoundingClientRect();burst(r.left+r.width/2,r.top,28)}upd();$$('.mod .done').forEach((x,j)=>x.style.background=done.has(j)?'#16a34a':'var(--blue)')}});upd();
+const links=$$('#nl a');addEventListener('scroll',()=>{const y=scrollY;$('#nav').classList.toggle('s',y>40);$('#top').classList.toggle('on',y>700);
+ $('#rb').style.width=(y/(document.body.scrollHeight-innerHeight)*100||0)+'%';let cur='';['home','overview',...ids,'quiz'].forEach(id=>{const e=document.getElementById(id);if(e&&e.getBoundingClientRect().top<200)cur=id});
+ links.forEach(a=>{const h=a.getAttribute('href').slice(1);a.classList.toggle('on',h===cur||(h==='m1'&&ids.includes(cur)))})},{passive:true});
+$('#top').onclick=()=>go('#home');
+// quiz
+const Q=[["Cyberethics paling tepat diartikan sebagai…",["Studi moral, legal dan pengaruh sosial serta dampaknya akibat kemajuan teknologi informasi","Ilmu merakit perangkat komputer","Aturan hukum pidana khusus internet"],0,"Cyberethics adalah “etika dunia maya”: studi terkait moral, legal dan pengaruh sosial akibat kemajuan teknologi informasi."],
+["Fase ketiga Cyberethics (1990–sekarang) ditandai teknologi…",["Stand alone machine dan mainframe","Internet dan www","Konvergensi ICT dengan bio dan nano"],1,"Fase 3: Internet dan www, dengan issue free speech, anonimity, legal juridiction, virtual communities."],
+["Manakah yang BUKAN salah satu dari lima dimensi moral?",["System Quality","Accountability & Control","Network Speed"],2,"Lima dimensi: information rights, property rights, system quality, quality of life, accountability & control."],
+["Dalam Basic Components of Moral System, “Do not steal” adalah contoh…",["Rules for guiding actions of individuals (microlevel)","Social policies (macrolevel)","Principles of Evaluation"],0,"Directives seperti do not steal, do not harm others adalah aturan tingkat mikro bagi individu."],
+["Prinsip Real Space = Cyber Space menyatakan bahwa…",["Norma di dunia maya lebih longgar","Norma di dunia nyata dan maya sama","Dunia maya tidak memiliki norma"],1,"Baik di dunia nyata = baik di dunia maya; buruk = buruk; norma di keduanya sama."],
+["Pencurian data dan penipuan termasuk kejahatan di mana komputer menjadi…",["Sasaran","Alat atau sarana","Bukti digital"],1,"Komputer sebagai alat/sarana: pencurian data, penipuan, ancaman, dll. Serangan virus termasuk komputer sebagai sasaran."]];
+let sc=0,ans=0;$('#qz').innerHTML=Q.map((q,i)=>`<div class="q"><b>${i+1}. ${q[0]}</b>${q[1].map((o,j)=>`<button class="o" data-q="${i}" data-o="${j}">${o}</button>`).join('')}<div class="fb" id="fb${i}"></div></div>`).join('')+'<div id="res" class="big"></div>';
+$('#qz').onclick=e=>{const b=e.target.closest('.o');if(!b||b.parentNode.dataset.d)return;const i=+b.dataset.q,j=+b.dataset.o,q=Q[i];b.parentNode.dataset.d=1;$$('.o',b.parentNode).forEach(x=>x.disabled=true);
+ b.classList.add(j===q[2]?'ok':'no');$$('.o',b.parentNode)[q[2]].classList.add('ok');$('#fb'+i).textContent=(j===q[2]?'Benar! ':'Belum tepat. ')+q[3];if(j===q[2])sc++;ans++;if(ans===Q.length){$('#res').textContent='Skor: '+sc+' / '+Q.length;burst(innerWidth/2,innerHeight/2,30)}};
+</script></body></html>
